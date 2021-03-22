@@ -91,14 +91,15 @@ unsigned char kbdus2[128] =
     0,	/* All other keys are undefined */
 };
 
+unsigned char shift_pressed = 0; // Shift Left and Shift Right control
+
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
 {
     unsigned char scancode;
     
     //char buffer[256];
-    unsigned char shift_pressed = 0;
-
+    
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
 
@@ -108,6 +109,9 @@ void keyboard_handler(struct regs *r)
     {
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
+        
+        if ((scancode == 170) || (scancode == 182)) shift_pressed = 0; // Shift Left and Shift Right released
+        
     }
     else
     {
@@ -124,12 +128,12 @@ void keyboard_handler(struct regs *r)
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
         //putch(kbdus[scancode]);
-        //puts(itoa(scancode,buffer,10));
-        if ((scancode == 42) || (scancode == 54)) shift_pressed = 1;
-        //else shift_pressed = 0;
+        
+        if ((shift_pressed == 0) && ((scancode == 42) || (scancode == 54))) shift_pressed = 1; // Shift Left and Shift Right pressed
         
         if (shift_pressed == 1) putch(kbdus2[scancode]);
         else putch(kbdus[scancode]);
+        
     }
     
     if (r->int_no == 33)
