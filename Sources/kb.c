@@ -127,7 +127,7 @@ void keyboard_handler(struct regs *r)
         *  you would add 128 to the scancode when you look for it */
         //putch(kbdus[scancode]);
         
-        if ((shift_pressed == 0) && ((scancode == 42) || (scancode == 54))) shift_pressed = 1; // Shift Left and Shift Right pressed
+        if ((scancode == 42) || (scancode == 54)) shift_pressed = 1; // Shift Left and Shift Right pressed
         
         if (shift_pressed == 1) putch(kbdus2[scancode]);
         else putch(kbdus[scancode]);
