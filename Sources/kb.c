@@ -98,8 +98,6 @@ void keyboard_handler(struct regs *r)
 {
     unsigned char scancode;
     
-    //char buffer[256];
-    
     /* Read from the keyboard's data buffer */
     scancode = inportb(0x60);
 
