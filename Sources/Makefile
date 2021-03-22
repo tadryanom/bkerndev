@@ -21,4 +21,4 @@ kernel.elf: $(OBJECTS)
 	$(AS) $(ASFLAGS) $< -o $@
 
 clean:
-	rm -vrf *.o kernel.bin
+	rm -vrf *.o kernel.elf
