@@ -9,9 +9,9 @@ LDFLAGS = -melf_i386 -T link.ld
 AS = nasm
 ASFLAGS = -f elf
 
-all: kernel.bin
+all: kernel.elf
 
-kernel.bin: $(OBJECTS)
+kernel.elf: $(OBJECTS)
 	$(LD) $(LDFLAGS) $(OBJECTS) -o $@
 
 %.o: %.c

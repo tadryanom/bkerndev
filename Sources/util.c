@@ -1,5 +1,6 @@
 #include <util.h>
 
+/* Return the absolute value of I.  */
 inline int abs (int i)
 {
     return i < 0 ? -i : i;
