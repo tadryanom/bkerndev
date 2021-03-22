@@ -1,4 +1,4 @@
-OBJECTS = start.o main.o scrn.o gdt.o idt.o isrs.o irq.o timer.o kb.o
+OBJECTS = start.o main.o scrn.o gdt.o idt.o isrs.o irq.o timer.o util.o kb.o
 CC = gcc
 CFLAGS = -m32 -Wall -Wextra -Werror -O -fno-pie -fno-stack-protector \
 	-nostartfiles -nodefaultlibs -nostdlib -fstrength-reduce \
