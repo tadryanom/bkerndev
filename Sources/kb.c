@@ -11,7 +11,7 @@
 *  comments in to give you an idea of what key is what, even
 *  though I set it's array index to 0. You can change that to
 *  whatever you want using a macro, if you wish! */
-unsigned char kbdus[128] =
+unsigned char kbdus_low[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
   '9', '0', '-', '=', '\b',	/* Backspace */
@@ -51,7 +51,7 @@ unsigned char kbdus[128] =
     0,	/* All other keys are undefined */
 };
 
-unsigned char kbdus2[128] =
+unsigned char kbdus_hight[128] =
 {
     0,  27, '!', '@', '#', '$', '%', '^', '&', '*',	/* 9 */
   '(', ')', '_', '+', '\b',	/* Backspace */
@@ -92,6 +92,10 @@ unsigned char kbdus2[128] =
 };
 
 unsigned char shift_pressed = 0; // Shift Left and Shift Right control
+#define SHIFT_LEFT_PRESSED_SCANCODE    0x2a
+#define SHIFT_RIGHT_PRESSED_SCANCODE   0x36
+#define SHIFT_LEFT_RELEASED_SCANCODE   0xaa
+#define SHIFT_RIGHT_RELEASED_SCANCODE  0xb6
 
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r)
@@ -108,7 +112,9 @@ void keyboard_handler(struct regs *r)
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
         
-        if ((scancode == 170) || (scancode == 182)) shift_pressed = 0; // Shift Left and Shift Right released
+        if ((scancode == SHIFT_LEFT_RELEASED_SCANCODE) || 
+            (scancode == SHIFT_RIGHT_RELEASED_SCANCODE))
+            shift_pressed = 0; // Shift Left and Shift Right released
         
     }
     else
@@ -125,12 +131,15 @@ void keyboard_handler(struct regs *r)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
-        //putch(kbdus[scancode]);
         
-        if ((scancode == 42) || (scancode == 54)) shift_pressed = 1; // Shift Left and Shift Right pressed
+        if ((scancode == SHIFT_LEFT_PRESSED_SCANCODE) || 
+            (scancode == SHIFT_RIGHT_PRESSED_SCANCODE)) 
+            shift_pressed = 1; // Shift Left and Shift Right pressed
         
-        if (shift_pressed == 1) putch(kbdus2[scancode]);
-        else putch(kbdus[scancode]);
+        if (shift_pressed == 1) 
+            putch(kbdus_hight[scancode]);
+        else 
+            putch(kbdus_low[scancode]);
         
     }
     
