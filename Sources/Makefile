@@ -10,10 +10,13 @@ LDFLAGS = -T ./script/link.ld -melf_i386
 OBJECTS = ./boot/start.o ./kernel/main.o ./kernel/scrn.o ./kernel/gdt.o \
 	./kernel/idt.o ./kernel/isrs.o ./kernel/irq.o ./kernel/timer.o \
 	./kernel/kb.o
+kernel.elf = ./bin/kernel.elf
 
-all: ./bin/kernel.elf
 
-./bin/kernel.elf: $(OBJECTS)
+all: $(kernel.elf)
+
+$(kernel.elf): $(OBJECTS)
+	@if ! [ -d ./bin/ ] ; then mkdir -vp ./bin ; fi
 	$(LD) $(LDFLAGS) $(OBJECTS) -o ./bin/kernel.elf
 
 %.o: %.asm
@@ -25,5 +28,5 @@ all: ./bin/kernel.elf
 clean:
 	rm -vrf ./boot/*.o ./kernel/*.o ./bin/kernel.elf
 
-run: ./bin/kernel.elf
+run: $(kernel.elf)
 	$(QEMU) -m 32 -monitor stdio -kernel ./bin/kernel.elf
