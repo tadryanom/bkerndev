@@ -21,17 +21,22 @@ KERNEL = ./bin/kernel.elf
 all: $(KERNEL)
 
 $(KERNEL): $(OBJECTS)
-	@if ! [ -d ./bin/ ] ; then mkdir -vp ./bin ; fi
-	$(LD) $(LDFLAGS) $(OBJECTS) -o $(KERNEL)
+	@if ! [ -d ./bin/ ] ; then mkdir -p ./bin ; fi
+	@echo "[LD] $(KERNEL)"
+	@$(LD) $(LDFLAGS) $(OBJECTS) -o $(KERNEL)
 
 %.o: %.asm
-	$(AS) $(ASFLAGS) $< -o $@
+	@echo "[AS] $@"
+	@$(AS) $(ASFLAGS) $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) $< -o $@
+	@echo "[CC] $@"
+	@$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm -vf ./boot/*.o ./kernel/*.o $(KERNEL)
+	@echo "Cleaning compiled objects..."
+	@rm -vRf $(OBJECTS) $(KERNEL) ./bin
 
 run: $(KERNEL)
-	$(QEMU) -m 32 -monitor stdio -kernel $(KERNEL)
+	@echo "Running kernel test..."
+	@$(QEMU) -m 32 -monitor stdio -kernel $(KERNEL)
