@@ -91,8 +91,6 @@ void putch(unsigned char c)
     if(c == 0x08)
     {
         if(csr_x != 0) csr_x--;
-        where = textmemptr + (csr_y * 80 + csr_x);
-        *where = ' ' | att;	/* Character AND attributes: color */
     }
     /* Handles a tab by incrementing the cursor's x, but only
     *  to a point that will make it divisible by 8 */
@@ -139,11 +137,11 @@ void putch(unsigned char c)
 }
 
 /* Uses the above routine to output a string... */
-void puts(char *text)
+void puts(unsigned char *text)
 {
     int i;
 
-    for (i = 0; i < strlen(text); i++)
+    for (i = 0; i < strlen((const char*)text); i++)
     {
         putch(text[i]);
     }

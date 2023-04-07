@@ -93,43 +93,43 @@ void isrs_install()
 *  corresponds to each and every exception. We get the correct
 *  message by accessing like:
 *  exception_message[interrupt_number] */
-char *exception_messages[] =
+unsigned char *exception_messages[] =
 {
-    "Division By Zero",
-    "Debug",
-    "Non Maskable Interrupt",
-    "Breakpoint",
-    "Into Detected Overflow",
-    "Out of Bounds",
-    "Invalid Opcode",
-    "No Coprocessor",
+    (unsigned char*)"Division By Zero",
+    (unsigned char*)"Debug",
+    (unsigned char*)"Non Maskable Interrupt",
+    (unsigned char*)"Breakpoint",
+    (unsigned char*)"Into Detected Overflow",
+    (unsigned char*)"Out of Bounds",
+    (unsigned char*)"Invalid Opcode",
+    (unsigned char*)"No Coprocessor",
 
-    "Double Fault",
-    "Coprocessor Segment Overrun",
-    "Bad TSS",
-    "Segment Not Present",
-    "Stack Fault",
-    "General Protection Fault",
-    "Page Fault",
-    "Unknown Interrupt",
+    (unsigned char*)"Double Fault",
+    (unsigned char*)"Coprocessor Segment Overrun",
+    (unsigned char*)"Bad TSS",
+    (unsigned char*)"Segment Not Present",
+    (unsigned char*)"Stack Fault",
+    (unsigned char*)"General Protection Fault",
+    (unsigned char*)"Page Fault",
+    (unsigned char*)"Unknown Interrupt",
 
-    "Coprocessor Fault",
-    "Alignment Check",
-    "Machine Check",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
+    (unsigned char*)"Coprocessor Fault",
+    (unsigned char*)"Alignment Check",
+    (unsigned char*)"Machine Check",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
 
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved"
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved",
+    (unsigned char*)"Reserved"
 };
 
 /* All of our Exception handling Interrupt Service Routines will
@@ -143,7 +143,7 @@ void fault_handler(struct regs *r)
     if (r->int_no < 32)
     {
         puts(exception_messages[r->int_no]);
-        puts(" Exception. System Halted!\n");
+        puts((unsigned char*)" Exception. System Halted!\n");
         for (;;);
     }
 }

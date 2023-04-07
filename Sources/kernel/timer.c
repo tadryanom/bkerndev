@@ -7,8 +7,7 @@
 
 /* This will keep track of how many ticks that the system
 *  has been running for */
-//int timer_ticks = 0;
-unsigned long int timer_ticks = 0;
+int timer_ticks = 0;
 
 /* Handles the timer. In this case, it's very simple: We
 *  increment the 'timer_ticks' variable every time the
@@ -17,6 +16,7 @@ unsigned long int timer_ticks = 0;
 *  been smoking something funky */
 void timer_handler(struct regs *r)
 {
+	(void)r;
     /* Increment our 'tick count' */
     timer_ticks++;
 
@@ -24,12 +24,7 @@ void timer_handler(struct regs *r)
     *  display a message on the screen */
     if (timer_ticks % 18 == 0)
     {
-        //puts("One second has passed\n");
-    }
-    
-    if (r->int_no == 32)
-    {
-        //puts("IRQ0 triggered!\n");
+        puts((unsigned char*)"One second has passed\n");
     }
 }
 
@@ -40,7 +35,7 @@ void timer_wait(int ticks)
     unsigned long eticks;
 
     eticks = timer_ticks + ticks;
-    while(timer_ticks < eticks);
+    while(timer_ticks < (int)eticks);
 }
 
 /* Sets up the system clock by installing the timer handler

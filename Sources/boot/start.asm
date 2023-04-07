@@ -40,7 +40,7 @@ mboot:
     dd start
 
 ; This is an endless loop here. Make a note of this: Later on, we
-; will insert an 'extern _main', followed by 'call _main', right
+; will insert an 'extern main', followed by 'call main', right
 ; before the 'jmp $'.
 stublet:
     extern main
@@ -65,7 +65,7 @@ gdt_flush:
 flush2:
     ret
 
-; Loads the IDT defined in '_idtp' into the processor.
+; Loads the IDT defined in 'idtp' into the processor.
 ; This is declared in C as 'extern void idt_load();'
 global idt_load
 extern idtp
@@ -328,7 +328,7 @@ isr31:
 
 
 ; We call a C function in here. We need to let the assembler know
-; that '_fault_handler' exists in another file
+; that 'fault_handler' exists in another file
 extern fault_handler
 
 ; This is our common ISR stub. It saves the processor state, sets
@@ -519,8 +519,7 @@ irq_common_stub:
 ; Here is the definition of our BSS section. Right now, we'll use
 ; it just to store the stack. Remember that a stack actually grows
 ; downwards, so we declare the size of the data before declaring
-; the identifier '_sys_stack'
+; the identifier 'sys_stack'
 SECTION .bss
     resb 8192               ; This reserves 8KBytes of memory here
 sys_stack:
-

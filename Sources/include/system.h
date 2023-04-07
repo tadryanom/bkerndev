@@ -27,7 +27,7 @@ extern void outportb (unsigned short _port, unsigned char _data);
 
 /* CONSOLE.C */
 extern void init_video(void);
-extern void puts(char *text);
+extern void puts(unsigned char *text);
 extern void putch(unsigned char c);
 extern void cls();
 

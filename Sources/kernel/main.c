@@ -60,15 +60,10 @@ int main()
 
     __asm__ __volatile__ ("sti");
 
-    //puts("Hello World!\n");
-    puts("bkerndev - Bran's Kernel Development Tutorial\n");
-    puts("By: Brandon F. (friesenb@gmail.com)\n");
-    puts("\nNo warranty expressed or implied. Use at own risk.\n\n");
+    puts((unsigned char*)"Hello World!\n");
 
 //    i = 10 / 0;
 //    putch(i);
 
     for (;;);
-    
-    return 0;
 }
